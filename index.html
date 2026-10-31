@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土木建築安全網</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Industrial Theme Styles */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #f3f4f6; /* gray-100 */
+            color: #111827; /* gray-900 */
+        }
+        
+        /* Black and Yellow Warning Stripes */
+        .bg-stripes {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                #000000,
+                #000000 20px,
+                #eab308 20px, /* yellow-500 */
+                #eab308 40px
+            );
+        }
+        
+        .border-stripes {
+            border: 4px solid;
+            border-image: repeating-linear-gradient(
+                -45deg,
+                #000 0,
+                #000 10px,
+                #eab308 10px,
+                #eab308 20px
+            ) 4;
+        }
+
+        /* E-Stop Button Pulsing Animation */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .e-stop-btn {
+            animation: pulse-red 2s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eab308;
+            border-radius: 4px;
+        }
+        
+        canvas {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative flex flex-col items-center">
+
+    <!-- Header / Navigation -->
+    <header class="w-full bg-white border-b border-amber-500 sticky top-0 z-40 shadow-md">
+        <div class="h-2 w-full bg-stripes"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500 rounded flex items-center justify-center text-black font-bold text-xl">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-amber-700 tracking-wider">土木建築安全網</h1>
+                    <p class="text-xs text-gray-500">Civil & Construction Safety Training</p>
+                </div>
+            </div>
+            
+            <!-- E-Stop Button -->
+            <button onclick="toggleModal('estop-modal')" class="e-stop-btn flex items-center justify-center w-16 h-16 bg-red-600 rounded-full border-4 border-amber-400 hover:bg-red-500 transition-colors active:scale-95 shadow-lg shadow-red-900/50">
+                <span class="text-white font-black text-sm text-center leading-tight">工安<br>通報</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        
+        <!-- Hero Section -->
+        <section class="bg-white rounded-lg p-6 md:p-10 border-stripes shadow-md relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">營建零災害，安全不妥協</h2>
+                <p class="text-gray-600 max-w-2xl text-lg">落實承攬管理與工地自主檢查，確保每一位土木建築從業人員都能平安下班回家。</p>
+            </div>
+            <div class="absolute -right-20 -bottom-20 opacity-5 text-gray-900">
+                <svg class="w-96 h-96" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5zM11 10h2v5h-2v-5zm0 6h2v2h-2v-2z"/></svg>
+            </div>
+        </section>
+
+        <!-- 1. Eight Zones Section -->
+        <section>
+            <h3 class="text-2xl font-bold text-amber-700 mb-6 flex items-center gap-2">
+                <span class="bg-amber-500 w-2 h-8 block"></span>
+                營造工地十大安全分區規範
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Zone 1 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">高空作業與防墜安全</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【2公尺高處作業規範】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>凡於高度 2 公尺以上之開口、樓板邊緣作業，必須設置護欄、護蓋或安全網。</li>
+                                <li class="text-red-600 font-bold">嚴禁使用單腰式安全帶：必須全面使用「全身背負式安全帶」搭配雙掛勾。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【母索與掛點設置】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>無護欄之高處，必須設置符合強度標準之水平或垂直安全母索。</li>
+                                <li>掛勾應採<span class="text-amber-600 font-bold">「高掛低用」</span>原則，確實扣妥於堅固之錨錠點。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 2 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">施工架與模板支撐</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【施工架組搭規範】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>必須依結構計算書組搭。確實安裝<span class="text-amber-600 font-bold">交叉斜撐 (交叉拉桿)</span>、插銷及防墜擋腳板。</li>
+                                <li>外牆施工架必須確實施作「壁體連結 (壁鎖)」，防止整面倒塌。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【模板工程與澆置安全】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>混凝土澆置時，嚴禁速度過快或偏心澆置，應隨時派員於下方監控模板支撐(V型或水平繫條)是否變形。</li>
+                                <li>裸露之鋼筋末端必須加裝<span class="text-red-600 font-bold">防護帽 (蘑菇頭)</span>，防止人員跌倒時遭刺穿。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 3 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">起重吊掛與塔吊作業</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【塔吊與移動式起重機】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>落實「三三三原則」：起吊3噸以上、離地3公尺前、暫停3秒鐘確認重心與煞車。</li>
+                                <li class="text-red-600 font-bold">嚴禁人員站立於吊掛物正下方。禁止以手直接扶持吊物，必須使用「引導索 (Tagline)」。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【強風管制】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>瞬間風速達 <span class="text-amber-600 font-bold">10 m/s</span> 以上時，應停止吊掛作業。</li>
+                                <li>塔吊下班停機時，必須將旋轉煞車放開 (Free Slew)，讓吊臂隨風向自由旋轉以降低風阻。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 4 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">局限空間與缺氧危害</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【進入前許可與氣體偵測】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>涵蓋環境：下水道、地下箱涵、化糞池、連續壁公母榫清理等。</li>
+                                <li>進入前必須實施<span class="text-amber-600 font-bold">四用氣體偵測</span> (O2 > 18%, LEL < 30%, H2S, CO)，並實施連續通風換氣。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【外部監視與救援】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>必須派駐「缺氧作業主管」及「缺氧監視人員」於外部，隨時清點人數並保持通訊。</li>
+                                <li class="text-red-600 font-bold">救援禁忌：若內部人員昏倒，外部人員絕對禁止在未配戴「供氣式呼吸防護具」的情況下貿然進入救援。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 5 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">開挖作業與擋土支撐</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【溝渠與基座開挖】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>深度超過 <span class="text-amber-600 font-bold">1.5 公尺</span>的開挖，若無安全坡度，必須設置擋土支撐或金屬擋土箱 (Trench Box)。</li>
+                                <li>開挖邊緣 1 公尺內，<span class="text-red-600 font-bold">嚴禁堆置土石</span>、材料或停放重機具，防止邊坡崩塌。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【安全上下設備】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>溝渠長度超過 30 公尺，至少必須設置一處安全的上下設備（如傾斜合適之階梯或固定鋁梯）。</li>
+                                <li>雨後或地震後復工前，必須由專任工程人員確認擋土設施無位移。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 6 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">營建重機具與交通維持</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【怪手與鏟裝機作業】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>重機具存在極大的「視覺死角」。作業半徑內<span class="text-red-600 font-bold">嚴格管制任何人員進入</span>。</li>
+                                <li>若須靠近引導，必須配戴高反光背心，並站在駕駛視線可及之處。禁止怪手充當起重機吊掛非指定重量的物品。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【交維計畫與用路人安全】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>佔用道路施工必須設置紐澤西護欄、閃光警示燈。</li>
+                                <li>配置受過訓練的交通指揮人員（交管），引導砂石車與預拌混凝土車進出。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 7 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">夜間作業與警示安全</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【夜間照明與設施警示】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>夜間施工環境必須提供足夠流明數之照明，以防人員因視線不良而發生踏空或墜落。</li>
+                                <li>開挖溝渠、施工架外側與道路邊緣，必須設置<span class="text-amber-600 font-bold">太陽能爆閃燈</span>與反光導標，提早警示駕駛人。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【人員高反光防護】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>所有夜間作業人員必須穿著符合國家標準的<span class="text-red-600 font-bold">高反光背心 (Class 2 以上)</span>。</li>
+                                <li>交管人員需配置發光指揮棒，並落實「共同作業制 (Buddy System)」，避免單人於死角作業。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 8 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">整理整頓與防穿刺安全</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【足部踏穿防範】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>模板拆除作業後，地面散落的木板常帶有生鏽鐵釘。必須嚴格要求即時<span class="text-amber-600 font-bold">拔釘或折彎</span>。</li>
+                                <li>全體人員必須配戴具備「<span class="text-red-600 font-bold">防穿刺鋼板 (防護墊)</span>」之標準安全鞋，嚴禁穿著布鞋、拖鞋或一般雨鞋進場。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【鋼筋與鐵件穿刺防護】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>垂直裸露的鋼筋必須加裝「防護帽 (蘑菇頭)」，避免人員墜落或跌倒時遭刺穿臟器。</li>
+                                <li>水平方向伸出的鋼筋或鐵件，需加上警示套管以防割傷或勾絆。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 9 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">個人防護裝備 (PPE)</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【基本防護標配】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>進入工區必須全程配戴合格之<span class="text-amber-600 font-bold">安全帽</span>，並確實扣緊頤帶（帽帶），防止低頭或墜落時脫落。</li>
+                                <li>全體人員應依作業性質穿著反光背心及防穿刺安全鞋。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【特殊作業防護】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><span class="text-red-600 font-bold">高粉塵及飛濺物作業</span>（如打石、切割、研磨），必須配戴防塵口罩與護目鏡。</li>
+                                <li>使用旋轉機具（如電鑽、砂輪機）時，<span class="text-red-600 font-bold">嚴禁配戴棉紗手套</span>，以防遭捲入；應使用防割或專用皮手套。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone 10 -->
+                <div class="bg-white border-t-4 border-amber-500 rounded shadow-md p-6 hover:shadow-lg transition flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-3 bg-gray-100 rounded-full text-amber-600 shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">臨時用電與動火管制</h4>
+                    </div>
+                    <div class="space-y-4 text-gray-600 text-sm leading-relaxed flex-1">
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【感電預防與接地】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>所有臨時用電之分電箱，必須裝設高感度、高速型<span class="text-amber-600 font-bold">漏電斷路器 (RCD)</span>。</li>
+                                <li>電銲機應裝設「自動電擊防止裝置」，且電器機具外殼必須確實接地。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-gray-900 font-bold mb-1 border-b border-gray-200 pb-1">【動火作業安全】</h5>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>進行電銲、氣割等動火作業前，必須淨空周遭及下方之易燃物（如紙箱、廢木材）。</li>
+                                <li>現場需鋪設<span class="text-red-600 font-bold">防火毯</span>以承接火花，並配置滅火器及指派專人（防火監視員）在場監控。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Interactive Simulator Section -->
+        <section class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden flex flex-col md:flex-row">
+            <div class="w-full md:w-1/3 p-6 bg-gray-50 border-r border-gray-200 flex flex-col">
+                <h3 class="text-2xl font-bold text-amber-700 mb-2">工地安全模擬器</h3>
+                <p class="text-gray-500 text-sm mb-6">操作面板體驗防護裝置的重要性。</p>
+                
+                <div class="flex gap-2 mb-6 bg-gray-200 p-1 rounded">
+                    <button id="btn-sim-scaffold" onclick="switchSim('scaffold')" class="px-4 py-2 text-sm font-medium rounded bg-amber-500 text-black shadow transition w-1/2">高空防墜</button>
+                    <button id="btn-sim-crane" onclick="switchSim('crane')" class="px-4 py-2 text-sm font-medium rounded text-gray-600 hover:text-gray-900 transition w-1/2">塔吊作業</button>
+                </div>
+
+                <!-- Scaffold Controls -->
+                <div id="control-scaffold" class="space-y-4">
+                    <div class="bg-white p-4 rounded border border-gray-300">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="chk-harness" onchange="toggleHarness(this.checked)" class="form-checkbox h-5 w-5 text-amber-500 rounded bg-white border-gray-400">
+                            <span class="text-gray-900 font-medium">高掛安全帶雙掛勾 (Harness)</span>
+                        </label>
+                    </div>
+                    <div class="bg-white p-4 rounded border border-gray-300 flex gap-2">
+                        <button onclick="triggerFall()" class="flex-1 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded active:scale-95 transition">模擬失足墜落</button>
+                        <button onclick="resetWorker()" class="flex-1 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded transition">重置</button>
+                    </div>
+                    <p id="scaffold-status" class="text-red-600 font-bold animate-pulse text-sm">⚠ 警告：未確實扣妥安全帶，墜落將致死！</p>
+                </div>
+
+                <!-- Crane Controls -->
+                <div id="control-crane" class="space-y-4" style="display: none;">
+                    <div class="bg-white p-4 rounded border border-gray-300">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="chk-wind" onchange="toggleWind(this.checked)" class="form-checkbox h-5 w-5 text-amber-500 rounded bg-white border-gray-400">
+                            <span class="text-gray-900 font-medium">氣候環境：瞬間強風 (>10m/s)</span>
+                        </label>
+                    </div>
+                    <div class="bg-white p-4 rounded border border-gray-300 flex gap-2">
+                        <button onmousedown="startCraneLift()" onmouseup="stopCraneLift()" onmouseleave="stopCraneLift()" ontouchstart="startCraneLift()" ontouchend="stopCraneLift()" class="flex-1 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded active:scale-95 transition">按住吊掛起升</button>
+                    </div>
+                    <p id="crane-status" class="text-green-600 font-bold text-sm">✓ 環境許可，可進行吊掛。</p>
+                </div>
+                
+                <div class="mt-auto pt-6">
+                    <p class="text-xs text-gray-400">※ 此為 2D 簡化演示，實際工地作業請依職安法規為準。</p>
+                </div>
+            </div>
+            <div class="w-full md:w-2/3 h-[400px] md:h-auto bg-sky-100 relative overflow-hidden">
+                <canvas id="sim-canvas" class="absolute inset-0 w-full h-full"></canvas>
+            </div>
+        </section>
+
+        <!-- 3. Safety Quiz Section -->
+        <section id="quiz-section">
+            <h3 class="text-2xl font-bold text-amber-700 mb-6 flex items-center gap-2">
+                <span class="bg-amber-500 w-2 h-8 block"></span>
+                土木建築工安與環保線上測驗 (共 14 題)
+            </h3>
+            
+            <div class="bg-white rounded-lg p-6 md:p-10 shadow-md border border-gray-200">
+                <form id="quiz-form" onsubmit="handleQuizSubmit(event)">
+                    <div class="space-y-8">
+                        <!-- Q1 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">1. 於施工架上進行 2 公尺以上之高處作業，為防止墜落致死，下列哪一種防護裝備是目前法規要求且最安全的？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q1" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 穿著「全身背負式安全帶」並搭配雙掛勾，確實扣於堅固母索。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q1" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 使用傳統的單腰帶式安全帶即可，比較不會阻礙活動。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q1" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 只要自己小心抓好欄杆，可以不用配戴安全帶。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">2. 關於施工架的組搭，下列何種安全設施可以有效防止人員跌落與物體飛落？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q2" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 只要架設水平踏板即可，不需要其他護欄。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q2" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 必須設置交叉拉桿、中欄杆以及防墜擋腳板。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q2" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 將施工架直接靠在牆上即可，不需施作壁體連結。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">3. 進行塔吊或移動式起重機吊掛作業時，為防止吊掛物旋轉擺盪傷人，應採取何種措施？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q3" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 指揮手直接站在吊掛物下方，用雙手扶住鋼筋。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q3" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 叫怪手過來用挖斗幫忙推一下。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q3" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 嚴禁人員位於吊物下方，必須使用「引導索 (Tagline)」於安全距離外控制方向。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">4. 工人準備進入地下箱涵（局限空間）進行防水工程，進入前必須嚴格執行的「第一步」是？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q4" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 實施四用氣體偵測，確認氧氣濃度及有無有害氣體，並啟動通風設備。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q4" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 點打火機丟進去測試有沒有沼氣。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q4" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 直接憋氣爬下去，反正幾分鐘就上來。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">5. 進行管線開挖作業時，當開挖深度超過多少公尺，且無安全坡度時，依法規定必須設置擋土支撐？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q5" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 0.5 公尺</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q5" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 1.5 公尺</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q5" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 3.0 公尺</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">6. 關於工地內的重機具（如挖土機、鏟裝機）作業，最大的安全隱患及防範措施為何？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q6" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 重機具視線很好，人員可以隨意在旁邊走動。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q6" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 重機具存在極大視覺死角，作業半徑內嚴禁人員進入，引導者需站立於安全距離及視線可及處。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q6" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 挖土機可以兼作交通車，載運工人到另一個工區。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q7 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">7. 在進行樓板與柱牆的混凝土澆置作業時，為防止模板爆裂坍塌，應該注意什麼？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q7" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 把泵浦車管線開到最大，越快灌完越好。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q7" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 將混凝土全部集中堆積在同一點，再慢慢推開。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q7" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 嚴禁偏心澆置及速度過快，且需派專人在下方監視模板支撐是否有異常變形聲響。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">8. 工地地面常有垂直裸露的鋼筋，為了防止人員跌倒時遭到穿刺重傷，正確的防護作法是？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q8" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 將鋼筋末端加裝安全防護帽 (俗稱蘑菇頭) 或是彎折處理。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q8" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 在鋼筋旁邊放一個三角錐提醒就好。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q8" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 把鋼筋漆成紅色，大家看了自然會閃開。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">9. 工地臨時用電（如手持砂輪機、電銲機）容易因為積水或漏電造成感電傷亡。分電箱中最重要的保命裝置是？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q9" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 只要插座孔夠多就好。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q9" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 必須裝設高感度、高速型的漏電斷路器 (RCD/GFCI)。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q9" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 用銅線把保險絲 bypass 短路，這樣就不會一直跳電影響進度。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q10 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">10. 若營建工地發生人員從施工架高處墜落，且倒地不起，旁人第一時間的標準處置為何？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q10" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 趕快幾個人把他抬起來，用小貨車載去醫院。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q10" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 搖晃他的身體，大聲叫醒他。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q10" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 嚴禁任意移動傷患以免造成頸椎二次傷害。立即疏散周圍、撥打 119 通報，並通報工地主任。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q11 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">11. 夜間施工為防止車輛衝撞與人員發生意外，下列何種作法是<span class="text-red-600 font-bold">錯誤</span>的？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q11" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 穿著黑色或深色衣服以隱蔽髒污。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q11" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 於工區周邊設置爆閃燈與足夠流明數的照明設備。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q11" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 交管與施作人員需配戴發光指揮棒與高反光背心。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q12 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">12. 模板拆除作業現場常散落帶有鐵釘的廢木板，作業人員應配戴何種個人防護具來避免腳底遭穿刺重傷？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q12" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 輕便防滑的膠底雨鞋。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q12" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 具備「防穿刺鋼板」或防護墊的標準安全鞋。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q12" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 只要自己走路時眼睛看清楚就好，穿一般運動鞋比較靈活。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q13 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">13. 關於工區內的個人防護裝備 (PPE)，下列哪一項操作規範是<span class="text-red-600 font-bold">錯誤</span>的？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q13" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 配戴安全帽時，覺得太熱可以不用扣緊下巴的頤帶，只要放在頭上即可。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q13" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 進行打石、切割等高粉塵與飛濺物作業時，必須配戴護目鏡與防塵口罩。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q13" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 使用砂輪機或手持電鑽等旋轉機具時，嚴禁戴棉紗手套，以免遭捲入。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q14 -->
+                        <div class="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                            <p class="text-lg text-gray-900 mb-3">14. 在高樓層或管溝旁進行電銲、氣割等「動火作業」時，最重要的火災防範措施是什麼？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q14" value="A" class="form-radio text-amber-500 mt-1" required> 
+                                    <span>A. 旁邊放一瓶礦泉水，著火時可以澆熄。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q14" value="B" class="form-radio text-amber-500 mt-1"> 
+                                    <span>B. 必須淨空下方易燃物，鋪設防火毯承接火花，並配置滅火器及專人監視。</span>
+                                </label>
+                                <label class="flex items-start gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
+                                    <input type="radio" name="q14" value="C" class="form-radio text-amber-500 mt-1"> 
+                                    <span>C. 只要自己小心燒，不用特別通報或準備滅火設備。</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200 flex justify-center">
+                        <button type="submit" class="px-10 py-3 bg-amber-500 text-black font-bold text-lg rounded hover:bg-amber-400 transition shadow-md">
+                            提交測驗 (Submit Quiz)
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
+        <footer class="text-center text-gray-500 text-sm pb-8">
+            &copy; 2024 土木建築安全網. All Rights Reserved. 示範教學用途。
+        </footer>
+    </main>
+
+    <!-- Modal: Message / Alert (Replacement for native alert) -->
+    <div id="msg-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-2xl max-w-sm w-full p-6 text-center transform transition-all scale-95 opacity-0" id="msg-modal-content">
+            <div id="msg-icon" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl font-bold bg-red-100 text-red-600">
+                ✗
+            </div>
+            <h3 id="msg-title" class="text-xl font-bold text-gray-900 mb-2">錯誤</h3>
+            <p id="msg-text" class="text-gray-600 mb-6">發生錯誤。</p>
+            <button onclick="closeMsgModal()" class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded font-medium transition">關閉</button>
+        </div>
+    </div>
+
+    <!-- Modal: E-Stop / Emergency Response -->
+    <div id="estop-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+        <div class="bg-white border-4 border-red-600 rounded-lg shadow-[0_0_30px_rgba(220,38,38,0.5)] max-w-4xl w-full p-0 overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-red-600 p-4 text-center shrink-0">
+                <h2 class="text-3xl font-black text-white uppercase tracking-widest flex items-center justify-center gap-3">
+                    <svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    營建工地重大工安事故應變 SOP
+                </h2>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto space-y-6">
+                <div class="bg-stripes h-2 w-full rounded"></div>
+                
+                <p class="text-gray-700 text-sm md:text-base border-b border-gray-200 pb-4">
+                    當工地發生高處墜落、擋土牆倒塌、局限空間缺氧中毒或起重機翻覆等重大意外時，所有現場人員必須嚴格遵守以下四步驟，以將傷害降至最低並避免二次傷亡。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-5 rounded-lg border-l-4 border-red-500 shadow-sm relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 opacity-10 text-9xl font-black text-red-500">1</div>
+                        <div class="flex items-center gap-3 mb-3 relative z-10">
+                            <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                            <h4 class="font-bold text-gray-900 text-xl">立即停工與隔離</h4>
+                        </div>
+                        <div class="space-y-2 text-gray-600 text-sm relative z-10">
+                            <p><strong class="text-gray-900">操作：</strong> 立即停止周遭所有重機具運作（怪手、吊車），切斷可能致災的電源。</p>
+                            <p><strong class="text-gray-900">感電特例：</strong> 若發生人員觸電，<span class="text-red-600 font-bold">絕對禁止徒手拉扯傷者</span>。必須尋找總配電箱切斷電源，或使用乾燥絕緣體分離。</p>
+                            <p><strong class="text-gray-900">目的：</strong> 終止危害能量來源，防止周遭環境產生連鎖效應破壞。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-lg border-l-4 border-orange-500 shadow-sm relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 opacity-10 text-9xl font-black text-orange-500">2</div>
+                        <div class="flex items-center gap-3 mb-3 relative z-10">
+                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                            <h4 class="font-bold text-gray-900 text-xl">大聲呼救與撤離</h4>
+                        </div>
+                        <div class="space-y-2 text-gray-600 text-sm relative z-10">
+                            <p><strong class="text-gray-900">操作：</strong> 大聲呼叫同事協助，並指定特定人員打電話（例如：「穿藍背心的，請打 119！」）。</p>
+                            <p><strong class="text-gray-900">淨空管制：</strong> 立即疏散非救援人員離開危險區域（如開挖溝渠邊緣、倒塌鷹架下方）。</p>
+                            <p><strong class="text-gray-900">局限空間：</strong> 若人員於下水道昏倒，<span class="text-red-600 font-bold">嚴禁外部人員未配戴供氣呼吸器貿然進入救援</span>，以免引發連環死亡。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-lg border-l-4 border-amber-500 shadow-sm relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 opacity-10 text-9xl font-black text-amber-500">3</div>
+                        <div class="flex items-center gap-3 mb-3 relative z-10">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center text-black font-bold">3</div>
+                            <h4 class="font-bold text-gray-900 text-xl">初步急救 (禁止任意移動)</h4>
+                        </div>
+                        <div class="space-y-2 text-gray-600 text-sm relative z-10">
+                            <p><strong class="text-gray-900">評估：</strong> 確認現場環境安全（無持續崩塌或漏電）後，方可接觸傷者。</p>
+                            <p><strong class="text-gray-900 text-red-600">墜落禁忌：</strong> 發生高空墜落或遭重物砸傷，<span class="font-bold">除非有起火的立即危險，否則絕對禁止移動傷者</span>。不當搬運極易造成頸椎或脊椎受損導致永久癱瘓。</p>
+                            <p><strong class="text-gray-900">處置：</strong> 若大出血，就地實施加壓止血；若無呼吸心跳，則就地實施 CPR 及使用 AED。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-lg border-l-4 border-green-500 shadow-sm relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 opacity-10 text-9xl font-black text-green-500">4</div>
+                        <div class="flex items-center gap-3 mb-3 relative z-10">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">4</div>
+                            <h4 class="font-bold text-gray-900 text-xl">外部通報與現場保留</h4>
+                        </div>
+                        <div class="space-y-2 text-gray-600 text-sm relative z-10">
+                            <p><strong class="text-gray-900">通報：</strong> 撥打 119。通報工地主任及專任工程人員。說明發生地點、事故類型及傷患狀況。</p>
+                            <p><strong class="text-gray-900">現場保留：</strong> 事故現場除為了救護或防止二次災害擴大外，必須拉起封鎖線<span class="text-amber-600 font-bold">保持原狀</span>。</p>
+                            <p><strong class="text-gray-900">配合調查：</strong> 嚴禁擅自清理血跡或移除致災機具，以利勞動檢查機構進行後續鑑定與職災調查。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-200">
+                    <button onclick="toggleModal('estop-modal')" class="w-full py-4 bg-gray-200 text-gray-900 font-bold rounded-lg hover:bg-gray-300 transition uppercase tracking-widest border border-gray-300 shadow-md text-lg">
+                        我已熟讀並了解工地緊急應變 SOP (關閉)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // Modal Handlers
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            if(modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; 
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showMsg(title, text, isSuccess = false) {
+            document.getElementById('msg-title').innerText = title;
+            document.getElementById('msg-text').innerText = text;
+            const icon = document.getElementById('msg-icon');
+            const content = document.getElementById('msg-modal-content');
+            
+            if(isSuccess) {
+                icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl font-bold bg-green-100 text-green-600';
+                icon.innerText = '✓';
+            } else {
+                icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl font-bold bg-red-100 text-red-600';
+                icon.innerText = '✗';
+            }
+
+            const modal = document.getElementById('msg-modal');
+            modal.classList.remove('hidden');
+            
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeMsgModal() {
+            const modal = document.getElementById('msg-modal');
+            const content = document.getElementById('msg-modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Quiz Logic for Construction Safety
+        function handleQuizSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            // Correct answers for Construction Safety
+            const answers = {
+                q1: 'A', q2: 'B', q3: 'C', q4: 'A', q5: 'B',
+                q6: 'B', q7: 'C', q8: 'A', q9: 'B', q10: 'C',
+                q11: 'A', q12: 'B', q13: 'A', q14: 'B'
+            };
+
+            let score = 0;
+            let allAnswered = true;
+            for(let key in answers) {
+                if(!formData.get(key)) {
+                    allAnswered = false;
+                } else if(formData.get(key) === answers[key]) {
+                    score++;
+                }
+            }
+
+            if(!allAnswered) {
+                showMsg('注意', '請回答所有的問題才能送出測驗。');
+                return;
+            }
+
+            if(score === 14) {
+                showMsg('測驗通過', '恭喜您獲得滿分！您已具備土木建築現場的核心安全知識。', true);
+            } else {
+                let finalScore = Math.round((score / 14) * 100);
+                showMsg('測驗未通過', `您的得分為 ${finalScore} 分。必須達到 100 分 (全對) 才能算合格。請重新複習上方規範。`, false);
+            }
+        }
+
+        // --- Canvas Simulator Logic (Construction Theme) ---
+        const canvas = document.getElementById('sim-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Simulation State
+        let currentSim = 'scaffold'; // 'scaffold' or 'crane'
+        let animationId;
+        
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        
+        // --- Scaffold (Fall Protection) Variables ---
+        let isHarnessHooked = false;
+        let isFalling = false;
+        let workerY = 0; // Relative offset
+        let workerVy = 0;
+
+        // --- Crane Variables ---
+        let isHighWind = false;
+        let craneLiftY = 0;
+        let isCraneLifting = false;
+        let craneSwingAngle = 0;
+        
+        function switchSim(type) {
+            currentSim = type;
+            
+            // UI Toggle
+            document.getElementById('btn-sim-scaffold').className = type === 'scaffold' 
+                ? 'px-4 py-2 text-sm font-medium rounded bg-amber-500 text-black shadow transition w-1/2' 
+                : 'px-4 py-2 text-sm font-medium rounded text-gray-600 hover:text-gray-900 transition w-1/2';
+                
+            document.getElementById('btn-sim-crane').className = type === 'crane' 
+                ? 'px-4 py-2 text-sm font-medium rounded bg-amber-500 text-black shadow transition w-1/2' 
+                : 'px-4 py-2 text-sm font-medium rounded text-gray-600 hover:text-gray-900 transition w-1/2';
+                
+            document.getElementById('control-scaffold').style.display = type === 'scaffold' ? 'block' : 'none';
+            document.getElementById('control-crane').style.display = type === 'crane' ? 'block' : 'none';
+
+            // Reset states
+            resetWorker();
+            document.getElementById('chk-harness').checked = false;
+            isHarnessHooked = false;
+            updateScaffoldStatus();
+
+            document.getElementById('chk-wind').checked = false;
+            isHighWind = false;
+            craneLiftY = 0;
+            isCraneLifting = false;
+            updateCraneStatus();
+        }
+
+        // Scaffold Handlers
+        function toggleHarness(val) {
+            isHarnessHooked = val;
+            updateScaffoldStatus();
+        }
+
+        function triggerFall() {
+            if(!isFalling && workerY === 0) {
+                isFalling = true;
+                workerVy = 2; // initial drop velocity
+            }
+        }
+
+        function resetWorker() {
+            isFalling = false;
+            workerY = 0;
+            workerVy = 0;
+        }
+
+        function updateScaffoldStatus() {
+            const status = document.getElementById('scaffold-status');
+            if(isHarnessHooked) {
+                status.innerText = "✓ 安全帶已確實扣於母索，具備防墜保護。";
+                status.className = "text-green-600 font-bold text-sm";
+            } else {
+                status.innerText = "⚠ 警告：未確實扣妥安全帶，墜落將致死！";
+                status.className = "text-red-600 font-bold animate-pulse text-sm";
+            }
+        }
+
+        // Crane Handlers
+        function toggleWind(val) {
+            isHighWind = val;
+            updateCraneStatus();
+        }
+
+        function startCraneLift() {
+            isCraneLifting = true;
+        }
+        function stopCraneLift() {
+            isCraneLifting = false;
+        }
+
+        function updateCraneStatus() {
+            const status = document.getElementById('crane-status');
+            if(isHighWind) {
+                status.innerText = "⚠ 警告：強風天候 (>10m/s)，嚴禁吊掛作業！";
+                status.className = "text-red-600 font-bold animate-pulse text-sm";
+            } else {
+                status.innerText = "✓ 環境許可，可進行吊掛。";
+                status.className = "text-green-600 font-bold text-sm";
+            }
+        }
+
+        // --- Drawing Functions ---
+
+        function drawScaffold() {
+            const cx = canvas.width / 2;
+            const groundY = canvas.height - 20;
+            const scaffoldTopY = groundY - 200;
+            
+            // Background / Building structure
+            ctx.fillStyle = '#E5E7EB'; // sky
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#9CA3AF'; // building wall
+            ctx.fillRect(cx - 150, groundY - 300, 100, 300);
+
+            // Scaffold Structure
+            ctx.strokeStyle = '#D97706'; // amber-600 frame
+            ctx.lineWidth = 4;
+            
+            // Vertical poles
+            ctx.beginPath(); ctx.moveTo(cx - 50, groundY); ctx.lineTo(cx - 50, scaffoldTopY - 50); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx + 50, groundY); ctx.lineTo(cx + 50, scaffoldTopY - 50); ctx.stroke();
+            
+            // Horizontal ledgers & platforms
+            for(let y = groundY; y >= scaffoldTopY; y -= 50) {
+                ctx.beginPath(); ctx.moveTo(cx - 60, y); ctx.lineTo(cx + 60, y); ctx.stroke();
+            }
+            
+            // Cross bracing (X)
+            ctx.lineWidth = 2;
+            for(let y = groundY; y > scaffoldTopY; y -= 50) {
+                ctx.beginPath(); ctx.moveTo(cx - 50, y); ctx.lineTo(cx + 50, y - 50); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(cx + 50, y); ctx.lineTo(cx - 50, y - 50); ctx.stroke();
+            }
+
+            // Safety Line (母索)
+            ctx.strokeStyle = '#2563EB'; // Blue lifeline
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(cx - 150, scaffoldTopY - 80); ctx.lineTo(cx + 100, scaffoldTopY - 80); ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Physics logic for worker
+            if (isFalling) {
+                workerVy += 0.8; // gravity
+                workerY += workerVy;
+
+                if (isHarnessHooked) {
+                    // Fall arrested by harness
+                    if (workerY > 50) { // Lanyard length
+                        workerY = 50;
+                        workerVy = -workerVy * 0.4; // bounce
+                    }
+                } else {
+                    // Hit ground
+                    if (scaffoldTopY + workerY > groundY - 40) {
+                        workerY = groundY - scaffoldTopY - 40;
+                        workerVy = 0;
+                    }
+                }
+            }
+
+            // Draw Worker
+            let wx = cx;
+            let wy = scaffoldTopY - 40 + workerY;
+            
+            if(!isFalling || isHarnessHooked) {
+                // If hooked, draw lanyard
+                if(isHarnessHooked) {
+                    ctx.strokeStyle = '#F59E0B'; // lanyard color
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(wx, wy); // from worker back
+                    ctx.lineTo(wx - 50, scaffoldTopY - 80); // to lifeline
+                    ctx.stroke();
+                    
+                    // Draw Carabiner hook
+                    ctx.fillStyle = '#4B5563';
+                    ctx.beginPath(); ctx.arc(wx - 50, scaffoldTopY - 80, 5, 0, Math.PI*2); ctx.fill();
+                }
+            }
+
+            // Worker Body (Simple Stick/Block figure)
+            ctx.fillStyle = '#1D4ED8'; // Blue coveralls
+            ctx.fillRect(wx - 10, wy, 20, 30); // body
+            
+            // Head + Helmet
+            ctx.fillStyle = '#FBBF24'; // Yellow helmet
+            ctx.beginPath(); ctx.arc(wx, wy - 10, 12, Math.PI, 0); ctx.fill(); // helmet dome
+            ctx.fillStyle = '#FCA5A5'; // skin
+            ctx.beginPath(); ctx.arc(wx, wy - 5, 8, 0, Math.PI*2); ctx.fill(); // face
+
+            // Legs
+            ctx.fillStyle = '#1E3A8A';
+            ctx.fillRect(wx - 10, wy + 30, 8, 20); // left leg
+            ctx.fillRect(wx + 2, wy + 30, 8, 20); // right leg
+
+            // Warning Effect if crashed
+            if (isFalling && !isHarnessHooked && workerY > 100) {
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.2)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#DC2626';
+                ctx.font = "bold 24px Inter";
+                ctx.textAlign = "center";
+                ctx.fillText("致命工安意外發生！", cx, 100);
+            } else if (isFalling && isHarnessHooked) {
+                ctx.fillStyle = '#059669'; 
+                ctx.font = "bold 20px Inter";
+                ctx.textAlign = "center";
+                ctx.fillText("防墜發揮作用，人員保命", cx, 100);
+            }
+        }
+
+        function drawCrane() {
+            const cx = canvas.width / 2;
+            const groundY = canvas.height - 20;
+            
+            // Physics / Wind Logic
+            if(isHighWind) {
+                // Erratic swing
+                craneSwingAngle = Math.sin(Date.now() / 150) * 0.4 + (Math.random() * 0.2);
+            } else {
+                // Smooth small swing
+                craneSwingAngle = Math.sin(Date.now() / 1000) * 0.05;
+            }
+
+            if(isCraneLifting && craneLiftY < 150) {
+                if(isHighWind) {
+                    // Lift struggles or drops slightly due to wind
+                    if(Math.random() < 0.2) craneLiftY -= 5;
+                    else craneLiftY += 1;
+                } else {
+                    craneLiftY += 2;
+                }
+            } else if (!isCraneLifting && craneLiftY > 0) {
+                craneLiftY -= 2;
+                if(craneLiftY < 0) craneLiftY = 0;
+            }
+
+            // Background
+            ctx.fillStyle = '#F0F9FF'; // sky
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Ground
+            ctx.fillStyle = '#9CA3AF';
+            ctx.fillRect(0, groundY, canvas.width, 30); 
+
+            // Crane Mast
+            ctx.fillStyle = '#F59E0B'; // Yellow/Amber Tower
+            const mastX = cx - 100;
+            ctx.fillRect(mastX, 50, 30, groundY - 50);
+            
+            // Mast cross bracing pattern
+            ctx.strokeStyle = '#4B5563';
+            ctx.lineWidth = 2;
+            for(let y = groundY; y > 50; y -= 30) {
+                ctx.beginPath(); ctx.moveTo(mastX, y); ctx.lineTo(mastX + 30, y - 30); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(mastX + 30, y); ctx.lineTo(mastX, y - 30); ctx.stroke();
+            }
+
+            // Crane Jib (Arm)
+            ctx.fillStyle = '#F59E0B';
+            ctx.fillRect(mastX - 50, 50, 300, 20); // main jib
+            ctx.beginPath(); ctx.moveTo(mastX + 15, 20); ctx.lineTo(mastX - 50, 50); ctx.lineTo(mastX + 250, 50); ctx.stroke(); // tie rod
+
+            // Trolley and Cable
+            const trolleyX = mastX + 150;
+            const trolleyY = 70;
+            ctx.fillStyle = '#374151';
+            ctx.fillRect(trolleyX - 10, trolleyY - 5, 20, 10); // trolley
+
+            // Calculate swing based on wind
+            const cableLen = groundY - 80 - craneLiftY;
+            const hookX = trolleyX + Math.sin(craneSwingAngle) * cableLen;
+            const hookY = trolleyY + Math.cos(craneSwingAngle) * cableLen;
+
+            // Draw Cable
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(trolleyX, trolleyY);
+            ctx.lineTo(hookX, hookY);
+            ctx.stroke();
+
+            // Draw Load (Steel beams)
+            ctx.save();
+            ctx.translate(hookX, hookY);
+            ctx.rotate(craneSwingAngle); // load tilts with swing
+            
+            ctx.fillStyle = '#4B5563'; // hook block
+            ctx.fillRect(-10, 0, 20, 15);
+            ctx.beginPath(); ctx.arc(0, 15, 8, 0, Math.PI); ctx.stroke(); // hook curve
+            
+            // H-Beams (Load)
+            ctx.fillStyle = '#6B7280'; // gray-500
+            ctx.fillRect(-40, 25, 80, 15);
+            ctx.fillRect(-40, 45, 80, 15);
+            // sling
+            ctx.strokeStyle = '#D97706';
+            ctx.beginPath(); ctx.moveTo(0, 20); ctx.lineTo(-30, 25); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, 20); ctx.lineTo(30, 25); ctx.stroke();
+
+            ctx.restore();
+
+            // Wind Particles (visual effect)
+            if(isHighWind) {
+                ctx.fillStyle = 'rgba(156, 163, 175, 0.5)';
+                for(let i=0; i<5; i++) {
+                    let wx = (Date.now()/5 + i*50) % canvas.width;
+                    let wy = 50 + (i*40);
+                    ctx.fillRect(wx, wy, 20, 2);
+                }
+                
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.1)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#DC2626';
+                ctx.font = "bold 20px Inter";
+                ctx.textAlign = "center";
+                ctx.fillText("強風警告！吊掛極易失控撞擊", cx, 150);
+            }
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (currentSim === 'scaffold') {
+                drawScaffold();
+            } else if (currentSim === 'crane') {
+                drawCrane();
+            }
+
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Init
+        window.onload = () => {
+            resizeCanvas();
+            gameLoop();
+        };
+
+    </script>
+</body>
+</html>
